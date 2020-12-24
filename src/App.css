@@ -336,6 +336,13 @@ html, body {
   transition: all 0.3s;
 }
 
+.empty-subscribtion {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+}
+
 .empty-subscribtion img {
   border: 2px solid #FF7A00;
   margin: 0 auto;
