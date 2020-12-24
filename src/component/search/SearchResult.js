@@ -25,9 +25,15 @@ const SearchResult = (props) => {
                     )
                 })
             ):(
-                <div className="search-empty">
-                    <span>Video not found !</span>
-                </div>
+                props.loading? (    
+                    <div className="search-empty">
+                        <ButtonLoader />
+                    </div>
+                ):(
+                    <div className="search-empty">
+                        <span>Video not found !</span>
+                    </div>
+                )
             )}
             {!props.isFinish && props.videos.length > 0 ? (
                 <div className="search-show-more">

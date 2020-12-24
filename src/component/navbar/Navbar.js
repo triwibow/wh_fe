@@ -139,7 +139,7 @@ const Navbar = () => {
     return(
         <div className="navbar">
             <div className="search-bar">
-                <input type="text" placeholder="Search..." onChange={handleInputChange} name="keyword"/>
+                <input type="text" placeholder="Search..." onChange={handleInputChange} name="keyword" autoComplete="off"/>
                 {result && (
                     <SearchResult 
                         videos={videos} 
