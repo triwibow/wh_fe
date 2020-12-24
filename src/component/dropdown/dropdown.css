@@ -19,6 +19,7 @@
 }
 
 .dropdown-link {
+    display: -webkit-flex;
     display: flex;
     align-items: center;
     color: #ffffff;
@@ -26,6 +27,7 @@
 }
 
 .dropdown-link img {
+    -webkit-flex-basis: 40%;
     flex-basis: 40%;
 }
 
