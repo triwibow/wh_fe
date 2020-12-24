@@ -10,6 +10,7 @@ import PageLoader from '../component/loader/PageLoader';
 
 // data
 import { API } from '../config/api';
+import empty from '../icon/empty.png';
 
 const Subscribtion = () => {
     const [error, setError] = useState(false);
@@ -46,19 +47,31 @@ const Subscribtion = () => {
             <div className="container">
                 <Navbar />
                 {error ? (
-                <h1>Server Error</h1>
+                    <div className="empty-subscribtion">
+                        <img src={empty} alt="empty" />
+                        <h3>There is No Video</h3>
+                        <p>Subscribe to other channels to display videos from the channels you are subscribed to</p>
+                    </div>
                 ): loading ? (
                     <PageLoader />
                 ):(
-                    <div className="card-content">
-                        {videos.map(video => {                       
-                            return <Card 
-                                        key={video.id} 
-                                        data={video}
-                                        edit={false} 
-                                    />
-                        })}
-                    </div>
+                    videos.length > 0 ? (
+                        <div className="card-content">
+                            {videos.map(video => {                       
+                                return <Card 
+                                            key={video.id} 
+                                            data={video}
+                                            edit={false} 
+                                        />
+                            })}
+                        </div>
+                    ):(
+                        <div className="empty-subscribtion">
+                            <img src={empty} alt="empty" />
+                            <h3>There is No Video</h3>
+                            <p>Subscribe to other channels to display videos from the channels you are subscribed to</p>
+                        </div>   
+                    )
                 )}
             </div>
         </div>

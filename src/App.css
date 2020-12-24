@@ -335,3 +335,22 @@ html, body {
   color: #FF7A00;
   transition: all 0.3s;
 }
+
+.empty-subscribtion img {
+  border: 2px solid #FF7A00;
+  margin: 0 auto;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.empty-subscribtion h3 {
+  text-align: center;
+  color: #FF7A00;
+}
+
+.empty-subscribtion p {
+  text-align: center;
+  color: #ffffff;
+}
