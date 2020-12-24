@@ -1,13 +1,18 @@
 import './search.css';
 import {Link} from 'react-router-dom';
+import ButtonLoader from '../loader/ButtonLoader';
 
 const SearchResult = (props) => {
-    console.log(props.videos);
     return (
         <div className="search-container">
             {props.videos.length > 0 ? (
                 props.videos.map(video => {
-                    return <div className="search-item" key={video.id}>
+                    return props.loading ? (
+                       <div className="search-item-loader">
+                           <ButtonLoader />
+                       </div>
+                    ):(
+                        <div className="search-item" key={video.id}>
                                 <div className="search-item-thumbnail">
                                     <img src={JSON.parse(video.thumbnail).path} alt='thumbnail' />
                                 </div>
@@ -17,6 +22,7 @@ const SearchResult = (props) => {
                                     </Link>
                                 </div>
                             </div>
+                    )
                 })
             ):(
                 <div className="search-empty">
@@ -25,7 +31,11 @@ const SearchResult = (props) => {
             )}
             {!props.isFinish && props.videos.length > 0 ? (
                 <div className="search-show-more">
-                    <button onClick={props.showMore}>Show More</button>
+                    <button onClick={props.showMore}>
+                        {props.loadShowMore ? (
+                            <ButtonLoader />
+                        ): "Show More"}
+                    </button>
                 </div>
             ): null}
         </div>

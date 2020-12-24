@@ -9,6 +9,13 @@
     background: #363636;
 }
 
+.search-item-loader {
+    display: grid;
+    padding: 10px 20px;
+    border-bottom: 1px solid #eeeeee;
+    gap: 20px;
+}
+
 .search-item {
     display: grid;
     grid-template-columns: 60px 1fr;
@@ -84,6 +91,10 @@
     font-size: 14px;
     color: #ffffff;
     cursor: pointer;
+}
+
+.search-show-more button:focus {
+    outline: none;
 }
 
 .search-show-more button:hover {

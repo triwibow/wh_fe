@@ -9,6 +9,8 @@ import {API} from '../../config/api';
 
 const Navbar = () => {
     const [loading, setLoading] = useState(true);
+    const [loadResult, setLoadResult] = useState(false);
+    const [loadShowMore, setLoadShowMore] = useState(false);
     const [result, setResult] = useState(false);
     const [videos, setVideos] = useState([]);
     const [offset, setOffset] = useState(0);
@@ -39,6 +41,7 @@ const Navbar = () => {
     const handleInputChange = async (event) => {
         try {
             setResult(true);
+            setLoadResult(true);
             setFinish(false);
             if(event.target.value === ""){
                 setVideos([]);
@@ -47,6 +50,7 @@ const Navbar = () => {
                 setFormData({
                     keyword: ''
                 })
+                setLoadResult(false);
                 return;
             }
             const body = {
@@ -64,6 +68,7 @@ const Navbar = () => {
                 setFormData({
                     keyword: ''
                 })
+                setLoadResult(false)
                 return;
             }
 
@@ -76,6 +81,8 @@ const Navbar = () => {
             setVideos(
                 response.data.data.videos
             )
+
+            setLoadResult(false);
 
             if(response.data.data.videos.length === 0){
                 setVideos([]);
@@ -90,6 +97,7 @@ const Navbar = () => {
 
     const showMore = async () => {
         try {
+            setLoadShowMore(true);
             const body = {
                 keyword: formData.keyword,
                 offset,
@@ -110,8 +118,8 @@ const Navbar = () => {
                 setFinish(true);
             }
 
-            setVideos(tmpData)
-
+            setVideos(tmpData);
+            setLoadShowMore(false)
 
         } catch(err){
             console.log(err);
@@ -132,7 +140,15 @@ const Navbar = () => {
         <div className="navbar">
             <div className="search-bar">
                 <input type="text" placeholder="Search..." onChange={handleInputChange} name="keyword"/>
-                {result && (<SearchResult videos={videos} showMore={showMore} isFinish={finish} />)}
+                {result && (
+                    <SearchResult 
+                        videos={videos} 
+                        showMore={showMore} 
+                        isFinish={finish} 
+                        loading={loadResult}
+                        loadShowMore={loadShowMore}
+                    />
+                )}
             </div>
             <div className="navbar-menu">
                 <ul className="navbar-menu-list">
