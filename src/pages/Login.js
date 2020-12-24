@@ -7,9 +7,11 @@ import title from '../title.svg';
 import InputField from '../component/form/InputField';
 import Alert from '../component/form/Alert';
 import { API, setAuthToken } from '../config/api';
+import ButtonLoader from '../component/loader/ButtonLoader';
 
 const Login = () => {
-    const router = useHistory()
+    const router = useHistory();
+    const [loading, setLoading] = useState(false);
     const [state, dispatch] = useContext(AppContext);
     const inputRef = useRef([createRef(), createRef()]);
     const [error, setError] = useState({
@@ -45,7 +47,7 @@ const Login = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-
+            setLoading(true);
             if(!validate()){
                 return false;
             }
@@ -63,6 +65,7 @@ const Login = () => {
                     status: true,
                     message: "Invalid login"
                 });
+                setLoading(false);
                 return false;
             }
 
@@ -72,10 +75,12 @@ const Login = () => {
             });
 
             setAuthToken(response.data.data.chanel.token);
+            setLoading(false);
             router.push('/');
            
         } catch(err){
             console.log(err);
+            setLoading(false);
         }
     }
 
@@ -125,7 +130,14 @@ const Login = () => {
                         validation={['required']}
                         
                     />
-                    <button className="button">Sign In</button>
+                    <button className="button">
+                    {loading ? 
+                            (
+                                <ButtonLoader />
+                            ): 
+                            ("Login")
+                        }
+                    </button>
                 </form>
             </div>
         </div> 
