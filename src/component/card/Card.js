@@ -1,16 +1,35 @@
 import './card.css';
 import {Link} from 'react-router-dom';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import number_views from '../../icon/number_views.svg';
 import refresh_icon from '../../icon/refresh_icon.svg';
-import remove from '../../icon/remove.png';
+import DropdownVideo from '../dropdown/DropdownVideo';
+import menudots from '../../icon/menudots.png';
+import CardLoader from '../loader/CardLoader';
 
 import Modal from '../modal/Modal';
-
 
 const Card = (props) => {
     const [modal, setModal] = useState(false);
     const [videoId, setVideoId] = useState(null);
+    const [showMenu, setShowMenu] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [thumbnail, setThumbnail] = useState();
+
+
+    const getThumbnail = () => {
+        setLoading(true);
+        setThumbnail(JSON.parse(props.data.thumbnail).path)
+        setLoading(false);
+    }
+
+    const showDropdown = () => {
+        if(showMenu){
+            setShowMenu(false);
+        } else {
+            setShowMenu(true);
+        }
+    }
 
     const showModal = () => {
         setVideoId(props.data.id);
@@ -27,18 +46,33 @@ const Card = (props) => {
         setModal(false);
     }
 
+    useEffect(() => {
+        getThumbnail();
+    },[])
+
     return(
         <div className="card">
             {modal && (<Modal closemodal={() => { closeModal() }} actionDelete={() => deleteVideo()}/>)}
             <div className="card-thumbnail-container">
                 <Link to={`/detail/${props.data.id}`} className="link">
-                    <img src={JSON.parse(props.data.thumbnail).path} alt="card_thumbnail" className="card-thumbnail" />
+                    {loading ? (
+                        <CardLoader />
+                    ):(
+                        <img src={thumbnail} alt="card_thumbnail" className="card-thumbnail" />
+                    )}
                 </Link>
                 {props.edit && (
-                    <button className="btn-delete" onClick={showModal}>
-                        <img src={remove} alt="remove" />
+                    <button className="btn-delete" onClick={showDropdown}>
+                        <img src={menudots} alt="remove" />
                     </button>
                 )}
+                {showMenu && (
+                    <DropdownVideo 
+                        showModalDelete={() => {showModal()}} 
+                        show={showMenu} 
+                        />
+                    )
+                }
             </div>
             <Link to={`/detail/${props.data.id}`} className="link">
                 <h1 className="card-title">{props.data.title}</h1>

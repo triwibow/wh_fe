@@ -1,6 +1,11 @@
 /* card */
 .card-thumbnail-container {
+  display: grid;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
+  height: 200px;
+  background: #9b9a9a;
   border-radius: 5px;
   position: relative;
 }
@@ -91,6 +96,7 @@
   height: 35px;
   transition: all 0.4s;
 }
+
 
 
 
