@@ -4,13 +4,24 @@ import './navbar.css';
 import add_video_icon from '../../icon/add_video_icon.svg';
 import add_video_icon_active from '../../icon/add_video_icon_active.svg';
 import Dropdown from '../dropdown/Dropdown';
+import SearchResult from '../search/SearchResult';
+import {API} from '../../config/api';
 
 const Navbar = () => {
     const [loading, setLoading] = useState(true);
+    const [result, setResult] = useState(false);
+    const [videos, setVideos] = useState([]);
+    const [offset, setOffset] = useState(0);
+    const [limit, setLimit] = useState(2);
+    const [finish, setFinish] = useState(false);
     const currentUser = JSON.parse(localStorage.getItem('user'));
     const pathName = window.location.pathname;
     const [isDropdown, setDropdown] = useState(false);
     const history = useHistory();
+
+    const [formData, setFormData] = useState({
+        keyword: ''
+    });
 
     const handleDropdown = () => {
         isDropdown? setDropdown(false):setDropdown(true);
@@ -22,6 +33,88 @@ const Navbar = () => {
         } else {
             setLoading(false);
             
+        }
+    }
+
+    const handleInputChange = async (event) => {
+        try {
+            setResult(true);
+            setFinish(false);
+            if(event.target.value === ""){
+                setVideos([]);
+                setOffset(0);
+                setResult(false);
+                setFormData({
+                    keyword: ''
+                })
+                return;
+            }
+            const body = {
+                keyword: event.target.value,
+                offset,
+                limit
+            }
+
+            const response = await API.post('/search', body);
+
+            if(response.data.status !== "success"){
+                setVideos([]);
+                setOffset(0);
+                setResult(false);
+                setFormData({
+                    keyword: ''
+                })
+                return;
+            }
+
+            setFormData({
+                keyword: event.target.value
+            });
+
+            setOffset(offset + limit);
+
+            setVideos(
+                response.data.data.videos
+            )
+
+            if(response.data.data.videos.length === 0){
+                setVideos([]);
+                setOffset(0);
+            }
+
+          
+        } catch(err){
+            console.log(err);
+        }
+    }
+
+    const showMore = async () => {
+        try {
+            const body = {
+                keyword: formData.keyword,
+                offset,
+                limit
+            }
+
+            const response = await API.post('/search', body);
+            setOffset(offset + limit);
+
+            const tmpData = [...videos];
+            const lastIndex = tmpData.length;
+
+            for(let i = 0; i < response.data.data.videos.length; i++){
+                tmpData[lastIndex + i] = response.data.data.videos[i]
+            }
+
+            if(response.data.data.videos.length === 0){
+                setFinish(true);
+            }
+
+            setVideos(tmpData)
+
+
+        } catch(err){
+            console.log(err);
         }
     }
 
@@ -38,7 +131,8 @@ const Navbar = () => {
     return(
         <div className="navbar">
             <div className="search-bar">
-                <input type="text" placeholder="Search..."/>
+                <input type="text" placeholder="Search..." onChange={handleInputChange} name="keyword"/>
+                {result && (<SearchResult videos={videos} showMore={showMore} isFinish={finish} />)}
             </div>
             <div className="navbar-menu">
                 <ul className="navbar-menu-list">
