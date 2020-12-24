@@ -7,12 +7,7 @@ const SearchResult = (props) => {
         <div className="search-container">
             {props.videos.length > 0 ? (
                 props.videos.map(video => {
-                    return props.loading ? (
-                       <div className="search-item-loader">
-                           <ButtonLoader />
-                       </div>
-                    ):(
-                        <div className="search-item" key={video.id}>
+                    return <div className="search-item" key={video.id}>
                                 <div className="search-item-thumbnail">
                                     <img src={JSON.parse(video.thumbnail).path} alt='thumbnail' />
                                 </div>
@@ -22,7 +17,6 @@ const SearchResult = (props) => {
                                     </Link>
                                 </div>
                             </div>
-                    )
                 })
             ):(
                 props.loading? (    

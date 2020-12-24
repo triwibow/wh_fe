@@ -13,7 +13,6 @@ const Navbar = () => {
     const [loadShowMore, setLoadShowMore] = useState(false);
     const [result, setResult] = useState(false);
     const [videos, setVideos] = useState([]);
-    const [offset, setOffset] = useState(0);
     const [limit, setLimit] = useState(2);
     const [finish, setFinish] = useState(false);
     const currentUser = JSON.parse(localStorage.getItem('user'));
@@ -45,7 +44,6 @@ const Navbar = () => {
             setFinish(false);
             if(event.target.value === ""){
                 setVideos([]);
-                setOffset(0);
                 setResult(false);
                 setFormData({
                     keyword: ''
@@ -55,15 +53,15 @@ const Navbar = () => {
             }
             const body = {
                 keyword: event.target.value,
-                offset,
+                offset: 0,
                 limit
             }
 
             const response = await API.post('/search', body);
+            console.log(response.data.data.videos)
 
             if(response.data.status !== "success"){
                 setVideos([]);
-                setOffset(0);
                 setResult(false);
                 setFormData({
                     keyword: ''
@@ -76,8 +74,6 @@ const Navbar = () => {
                 keyword: event.target.value
             });
 
-            setOffset(offset + limit);
-
             setVideos(
                 response.data.data.videos
             )
@@ -86,7 +82,6 @@ const Navbar = () => {
 
             if(response.data.data.videos.length === 0){
                 setVideos([]);
-                setOffset(0);
             }
 
           
@@ -98,17 +93,17 @@ const Navbar = () => {
     const showMore = async () => {
         try {
             setLoadShowMore(true);
+
+            const tmpData = [...videos];
+            const lastIndex = tmpData.length;
+
             const body = {
                 keyword: formData.keyword,
-                offset,
+                offset : tmpData.length,
                 limit
             }
 
             const response = await API.post('/search', body);
-            setOffset(offset + limit);
-
-            const tmpData = [...videos];
-            const lastIndex = tmpData.length;
 
             for(let i = 0; i < response.data.data.videos.length; i++){
                 tmpData[lastIndex + i] = response.data.data.videos[i]
