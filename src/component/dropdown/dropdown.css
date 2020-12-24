@@ -29,6 +29,8 @@
 .dropdown-link img {
     -webkit-flex-basis: 40%;
     flex-basis: 40%;
+    width: 40px;
+    height: 40px;
 }
 
 .dropdown-link span {
