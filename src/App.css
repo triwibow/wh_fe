@@ -124,6 +124,17 @@ html, body {
   padding: 30px 0;
 }
 
+.show-more-videos-wrapper {
+  display: grid;
+  margin-top: 20px;
+  grid-column-start: 1;
+  grid-column-end: 6;
+  justify-content: center;
+}
+
+.show-more-videos-wrapper button {
+  width: 100%;
+}
 
 
 
