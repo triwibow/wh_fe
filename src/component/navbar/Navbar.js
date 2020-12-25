@@ -58,7 +58,6 @@ const Navbar = () => {
             }
 
             const response = await API.post('/search', body);
-            console.log(response.data.data.videos)
 
             if(response.data.status !== "success"){
                 setVideos([]);
