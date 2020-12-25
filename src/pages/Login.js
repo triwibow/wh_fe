@@ -49,6 +49,7 @@ const Login = () => {
         try {
             setLoading(true);
             if(!validate()){
+                setLoading(false);
                 return false;
             }
 
