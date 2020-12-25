@@ -80,15 +80,17 @@ const Home = () => {
             ): loading ? (
                 <PageLoader />
             ):(
-                <div className="card-content">
-                    {videos.map(video => {                       
-                        return <Card 
-                                    key={video.id} 
-                                    data={video}
-                                    edit={false} 
-                                />
-                    })}
-
+                <>
+                    <div className="card-content">
+                        {videos.map(video => {                       
+                            return <Card 
+                                        key={video.id} 
+                                        data={video}
+                                        edit={false} 
+                                    />
+                        })}
+                    </div>
+        
                     {isFinish ? (
                         null
                     ):(
@@ -102,8 +104,7 @@ const Home = () => {
                             </button>
                         </div>
                     )}
-                    
-                </div>
+                </>
             )}
         </div>
     </div>
