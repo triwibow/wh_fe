@@ -13,7 +13,7 @@ const Navbar = () => {
     const [loadShowMore, setLoadShowMore] = useState(false);
     const [result, setResult] = useState(false);
     const [videos, setVideos] = useState([]);
-    const [limit, setLimit] = useState(2);
+    const [limit, setLimit] = useState(4);
     const [finish, setFinish] = useState(false);
     const currentUser = JSON.parse(localStorage.getItem('user'));
     const pathName = window.location.pathname;
