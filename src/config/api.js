@@ -1,12 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-    baseURL: "https://wayshub.herokuapp.com/api/v1",
-    headers: {
-    	'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json',
-    },
-    mode: "no-cors"
+    baseURL: "https://wayshub.herokuapp.com/api/v1"
 });
 
 const setAuthToken = (token) => {
