@@ -5,7 +5,8 @@ const API = axios.create({
     headers: {
     	'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json',
-    }
+    },
+    mode: "no-cors"
 });
 
 const setAuthToken = (token) => {
