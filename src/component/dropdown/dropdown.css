@@ -14,8 +14,10 @@
     list-style-type: none;
     padding: 20px 0 28px 0;
     background: #151515;
+    border: 1px solid #fff;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 4px 4px 20px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
+    padding: 20px 20px;
 }
 
 .dropdown-link {
@@ -26,7 +28,8 @@
 }
 
 .dropdown-link img {
-    flex-basis: 40%;
+    width: 20px;
+    margin-right: 20px;
 }
 
 .dropdown-link span {
@@ -40,7 +43,6 @@
 }
 
 .dropdown-link span:hover {
-    font-size: 18px;
     color: #FF7A00;
     transition: font-size 0.2s;
 }

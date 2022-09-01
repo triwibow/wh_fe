@@ -20,7 +20,6 @@ const Dropdown = () => {
 
     return(
         <div className="dropdown-wrapper">
-            <div className="polygon"></div>
             <ul className="dropdown-list">
                 <li className="dropdown-item">
                     <Link to="/my-channel" className="dropdown-link link">
